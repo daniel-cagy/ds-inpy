@@ -14,7 +14,7 @@ class Node:
         return f"({self.val})"
 
     def __repr__(self) -> str:
-        return f"Node({self} -> {self.nxt})"
+        return f"({self} -> {self.nxt})"
 
 
 class LinkedList:
@@ -33,8 +33,23 @@ class LinkedList:
             i+=1
         return f"{elements}"
 
+    def __len__(self) -> int:
+        return self.len
 
-    def append(self, node: Node) -> None:
+    def __getitem__(self, key: int) -> object:
+        if key < 0:
+            raise IndexError
+        current = self.head
+        for _ in range(key):
+            if type(current) != Node:
+                raise IndexError
+            current = current.nxt
+        if type(current) != Node:
+            raise IndexError
+        return current.val
+
+    def append(self, val: object) -> None:
+        node = Node(val)
         if self.head == None:
             self.head = node
             self.tail = self.head
@@ -66,6 +81,4 @@ class LinkedList:
         self.len -= 1
         return popped
 
-    def __len__(self) -> int:
-        return self.len
 
